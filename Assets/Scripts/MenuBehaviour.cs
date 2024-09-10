@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
@@ -20,6 +21,17 @@ public class MenuBehaviour : MonoBehaviour
 
     readonly private Dictionary<string, GameObject> homeScreenButtons = new();
     readonly private Dictionary<string, UnityEngine.Events.UnityAction> homeScreenActions = new();
+    
+    readonly private Dictionary<string, GameObject> rewardScreenButtons = new();
+    readonly private Dictionary<string, UnityEngine.Events.UnityAction> rewardScreenActions = new();
+
+    //private void OnGUI()
+    //{
+    //    if (GameObject.Find("Modal").TryGetComponent<ModalBehaviour>(out ModalBehaviour modal))
+    //    {
+    //        modal.IsActive = false;
+    //    }
+    //}
 
     private void Start()
     {
@@ -48,6 +60,35 @@ public class MenuBehaviour : MonoBehaviour
             foreach (KeyValuePair<string, GameObject> keyValuePair in homeScreenButtons)
             {
                 BindFunctionWithObjects(keyValuePair.Key, homeScreenButtons, homeScreenActions[keyValuePair.Key]);
+            }
+        }
+
+        if (menuScreen == MenuScreen.REWARD_SCREEN)
+        {
+            rewardScreenButtons.Add("continue", GameObject.Find("Continue"));
+            rewardScreenButtons.Add("noThanks", GameObject.Find("No Thanks"));
+            rewardScreenButtons.Add("softCurrency", GameObject.Find("Soft Currency"));
+            rewardScreenButtons.Add("hardCurrency", GameObject.Find("Hard Currency"));
+            rewardScreenButtons.Add("claimAd", GameObject.Find("Claim Ad"));
+            rewardScreenButtons.Add("claimNoThanks", GameObject.Find("Claim No Thanks"));
+
+            rewardScreenActions.Add("continue", () => Continue());
+            rewardScreenActions.Add("noThanks", () => NoThanks());
+            rewardScreenActions.Add("softCurrency", () => SoftCurrency());
+            rewardScreenActions.Add("hardCurrency", () => HardCurrency());
+            rewardScreenActions.Add("claimAd", () => ClaimAd());
+            rewardScreenActions.Add("claimNoThanks", () => ClaimNoThanks());
+
+            foreach (KeyValuePair<string, GameObject> keyValuePair in rewardScreenButtons)
+            {
+                try
+                {
+                    BindFunctionWithObjects(keyValuePair.Key, rewardScreenButtons, rewardScreenActions[keyValuePair.Key]);
+                }
+                catch (NullReferenceException e)
+                {
+                    Debug.Log($"Exception {e.Message} for object {keyValuePair.Key}");
+                }
             }
         }
     }
@@ -112,6 +153,39 @@ public class MenuBehaviour : MonoBehaviour
 
     private void Settings ()
     {
-        Debug.Log("Settings Clicked");
+        if (GameObject.Find("Modal").TryGetComponent<ModalBehaviour>(out ModalBehaviour modal))
+        {
+            modal.IsActive = true;
+        }
+    }
+
+    private void ClaimNoThanks()
+    {
+        Debug.Log("Claim no thanks clicked");
+    }
+
+    private void ClaimAd()
+    {
+        Debug.Log("Claim Ad clicked");
+    }
+
+    private void HardCurrency()
+    {
+        Debug.Log("Hard Currency clicked");
+    }
+
+    private void  SoftCurrency()
+    {
+        Debug.Log("Soft currency clicked");
+    }
+
+    private void NoThanks()
+    {
+        Debug.Log("No thanks clicked");
+    }
+
+    private void Continue()
+    {
+        Debug.Log("Continue clicked");
     }
 }

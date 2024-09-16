@@ -47,7 +47,9 @@ public class ModalBehaviour : MonoBehaviour
             Button applyButton = GameObject.Find("Apply").GetComponent<Button>();
             Button cancelButton = GameObject.Find("Cancel").GetComponent<Button>();
 
+            applyButton.onClick.AddListener(Apply);
             applyButton.onClick.AddListener(applyCallback);
+            cancelButton.onClick.AddListener(Cancel);
             cancelButton.onClick.AddListener(cancelCallback);
         }
         else
@@ -59,6 +61,17 @@ public class ModalBehaviour : MonoBehaviour
 
     private void Start()
     {
+        gameObject.SetActive(_isActive);
         IsActive = _isActive;
+    }
+
+    public void Cancel()
+    {
+        IsActive = false;
+    }
+
+    public void Apply()
+    {
+        IsActive = false;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
@@ -118,12 +119,16 @@ public class MenuBehaviour : MonoBehaviour
 
     private void Shop()
     {
-        Debug.Log("Shop Clicked");
+        // For debug purpose it's redirected to progressive reward scene
+        SceneManager.LoadScene("ProgressiveReward");
     }
 
     private void Upgrade()
     {
-        Debug.Log("Upgrade clicked");
+        //Debug.Log("Upgrade clicked");
+
+        // For debug purpose it's redirected to reward scene
+        SceneManager.LoadScene("RewardScene");
     }
 
     private void LootBox()
@@ -143,7 +148,7 @@ public class MenuBehaviour : MonoBehaviour
 
     private void SpinWheel()
     {
-        Debug.Log("Spin wheel clicked");
+        SceneManager.LoadScene("FortuneWheel");
     }
 
     private void Settings()
